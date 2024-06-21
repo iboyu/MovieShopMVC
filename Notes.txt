@@ -1,0 +1,123 @@
+ASP.NET Core MVC => Web App
+EF Core => SQL Database
+Azure => Azure Devops, Azure App Service => Azure Functions, Azure SQL
+ASP.NET Core API with Angular => SPA
+
+
+ASP.NET Core => Web APPS, API
+	MVC => Web Applications
+	API => Resut API
+
+HTTP =>
+
+GET  =>  retrive data    =>		http://movieshop.com/topmovies
+POST => send info to server =>  http://movieshop.com/account/register => FirstName, LastName, Email, Password <form action ="POST"> submit
+	Browsers => (http request)
+	1. to make http request: any programming language => HttpClient
+	2. Postman => http request
+	3. JS => XMLHttpRequest, fetch API
+PUT
+DELETE
+
+
+.NET Core => cross platform: win, Mac, Linux, Open source, Github, Ready to Cloud - 2016
+.Net Framework => older Windows only 2002 => 1 ... 4.8
+
+	console apps
+	web applications
+	web api
+	mobile apps
+	cross platform desktop apps
+	IOT
+	Games
+
+ASP.NET Core => 2016 1.0
+ASP.NET Core 6 => 2021 Nov
+
+difference between Solution and project name:
+solution is a container for one or more projects in Visual Studio
+
+
+MVC => 
+	Model => C# Object that represents some data
+	View => UI => HTML CSS JS
+	Controller => C# class tha inherits from Controller base class
+
+
+Get => http://movieshop.com/Home/topmovies
+	Domain name => http://movieshop.com
+	HomeController => Home
+	Action Method => topmovies
+
+GET => http://movieshop.com/Home/topGrossingMovies
+GET => http://movieshop.com/account/register
+GET => http://movieshop.com/Home/Details/2
+
+
+	routing =>  responsible for checking incoming request, mapping to the controller and action
+
+	public class HomeController : Controller
+	{
+		//many action methods, return Type ActionResult or IActionResult
+		//IActionResult is a Interface, ActionResult implement it
+		//ActionResult is when you know return exactly type (view, json...)
+		//IActionResult can return multiple different types
+
+		[HttpGet]
+		public ActionResult TopMovies()
+		{
+			//logic, go to database and get some objects
+			//List<Movie> => (model)
+			var movies= MovieServices().GetTopMoviews();
+
+			return View(moviews);
+		}
+
+				[HttpGet]
+		public ActionResult topGrossingMovies()
+		{
+			//logic, go to database and get some objects
+			//List<Movie> => (model)
+			var movies= MovieServices().GetTopMoviews();
+
+			return View(moviews);
+		}
+	}
+
+View in MVC are called Razor View => cshtml => combine c# and HTML
+
+
+1. UI Code -- Views, Controllers Code
+2. Business Logic Code => Hashing the Passwords, Getting Top Moviews, Registring, Login
+3. Data Acess => Go to SQL Database, get data, add data, update
+4. Services => Send Email => Log any exceptions
+5. Caching => cache some data
+
+Models/ViewModels/DTO (Data Transfer Objects)=> Data for Views (objects)
+	MovieCardModel => Id, PosterUrl
+	MovieDetailsModel 
+
+Entities => C# objects that represents your Tables
+		 =>movie
+		 Id, Title, Budgt, PosterUrl, Revenue, Rating, ReleaseDate, Casts,
+
+
+Exceptions: //find some movie ID that not exsit
+class MovieNotFoundException : Exception
+{
+	
+}
+
+repositories:
+1.ADO.NET
+2.ORM => Dapper or EF Core
+
+Tag Helpers in views: 
+<a asp-controller="Movies" asp-action="Details" asp-route-id ="@movie.Id">
+
+
+
+
+
+
+
