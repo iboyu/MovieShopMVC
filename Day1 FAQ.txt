@@ -1,0 +1,118 @@
+1. What are differences between .NET Framework and .NETCore.
+.NET Core => cross platform: win, Mac, Linux, Open source, Github, Ready to Cloud - 2016
+.Net Framework => older Windows only 2002
+
+
+2. Difference between asp.net Core 8 and asp.net Core 5 project files, stratup.cs and program.cs
+ASP.NET Core 5
+Program.cs:
+This file is responsible for setting up the generic host and configuring the application's host. 
+It creates the host builder and runs the application.
+Startup.cs:
+This file contains the Startup class, which is responsible for configuring the services and the 
+app's request pipeline.
+
+ASP.NET Core 8
+Starting from ASP.NET Core 6, the framework introduced a simplified hosting model which eliminates 
+the need for a separate Startup.cs file. This new model continues in ASP.NET Core 8, making the project 
+structure simpler.
+
+
+
+3. What is Dependency Injection and what are different scopes (Transient, Singleton, Scoped) in 
+asp.net core Dependency Injection?
+Dependency Injection (DI):
+A design pattern where dependencies are provided to a class rather than being created by the class itself.
+Enhances modularity, testability, and manageability.
+
+Transient: New instance every time.
+Scoped: New instance per request.
+Singleton: One instance for the entire app lifetime.
+
+
+4. What is Routing and how can you configure routing in asp.net core. Difference between
+convention-based/traditional routing and attribute-based routing ?
+Routing in ASP.NET Core is the mechanism that maps incoming HTTP requests to the appropriate controller 
+actions. It determines how URLs map to the controllers and actions of an application.
+Convention-Based Routing: Centralized route definitions using patterns in Program.cs or Startup.cs.
+example => pattern: "{controller=Home}/{action=Index}/{id?}");
+
+Attribute-Based Routing: Route definitions using attributes on controller actions for more flexibility 
+and fine-grained control.
+example:[HttpGet("")]=> index action;  [HttpGet("about")]=>about action;[HttpGet("product/{id}")]=>product/id
+
+5. Explain MVC Pattern and what are advantages of MVC Pattern?
+M:model => Represents the data and business logic of the application.
+V:view => Represents the presentation layer (UI) of the application.
+c:controller => Handles user input and interaction, updates the Model, and returns the appropriate View.
+
+advantage:
+Unit testing, parallel Development, resuability ... 
+
+6. How do you pass data from Controller to View and from View to Controller? Explain ViewBag,
+ViewData and Models/ViewModels
+Controller => view:
+viewbag: 
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        ViewBag.Message = "Hello, world!";
+        return View();
+    }
+}
+//<h1>@ViewBag.Message</h1>//
+
+viewdata: key-value pairs, use string as keys
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        ViewData["Message"] = "Hello, world!";
+        return View();
+    }
+}
+//<h1>@ViewData["Message"]</h1>//
+
+models/viewModels:
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        var model = new MyViewModel
+        {
+            Message = "Hello, world!"
+        };
+        return View(model);
+    }
+}
+//@model MyViewModel//
+//<h1>@Model.Message</h1>//
+
+
+view => controller:
+forms: when user hit "submit" button.
+<form asp-action="SubmitForm" method="post">
+    <input type="text" name="Name" />
+    <button type="submit">Submit</button>
+</form>
+[HttpPost]
+public IActionResult SubmitForm(string name)
+{
+    // Process the data
+    ViewBag.Name = name;
+    return View();
+}
+
+
+
+7. What is Razor syntax and how does it help developer?
+.cshtml file
+combine c# and html, c# enclosed with @ symbol
+
+8. Do you know what is model binding in asp.net core, how is it useful for developers?
+Model Binding is a process in ASP.NET Core that automatically maps HTTP request data 
+to action method parameters. It simplifies the interaction between the user input (e.g., 
+form data, query strings, route data) and the server-side code by directly converting this 
+input into .NET objects.
+
