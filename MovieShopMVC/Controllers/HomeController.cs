@@ -1,3 +1,4 @@
+using ApplicationCore.Contracts.Services;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Models;
@@ -14,6 +15,14 @@ namespace MovieShopMVC.Controllers
         //    _logger = logger;
         //}
 
+
+        //readonly only can change value in constructor
+        private readonly IMovieService _movieService;
+        public HomeController(IMovieService movieService)
+        {
+            _movieService = movieService;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -21,14 +30,14 @@ namespace MovieShopMVC.Controllers
             //most of your logic should come from other dependencies, such as services
             //interfaces
             //void method(int x, IMovieService service);
-            //class MovieService;IMovieService{}
+            //class MovieService : IMovieService{}
 
             //var movieservice = new MovieService();
             //method(20, movieservice);
-
-            var movieService = new MovieService();
+            //
+            //var movieService = new MovieService();
             //my model data
-            var movies = movieService.GetTop30GrossingMovies();
+            var movies = _movieService.GetTop30GrossingMovies();
 
             return View(movies);
         }

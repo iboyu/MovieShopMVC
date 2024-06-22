@@ -1,4 +1,4 @@
-ASP.NET Core MVC => Web App
+﻿ASP.NET Core MVC => Web App
 EF Core => SQL Database
 Azure => Azure Devops, Azure App Service => Azure Functions, Azure SQL
 ASP.NET Core API with Angular => SPA
@@ -94,7 +94,7 @@ View in MVC are called Razor View => cshtml => combine c# and HTML
 5. Caching => cache some data
 
 Models/ViewModels/DTO (Data Transfer Objects)=> Data for Views (objects)
-	MovieCardModel => Id, PosterUrl
+	MovieCardModel => Id, PosterUrl,title
 	MovieDetailsModel 
 
 Entities => C# objects that represents your Tables
@@ -110,10 +110,137 @@ class MovieNotFoundException : Exception
 
 repositories:
 1.ADO.NET
-2.ORM => Dapper or EF Core
+2.ORM (object relational mapping)=> Dapper or EF Core
 
 Tag Helpers in views: 
 <a asp-controller="Movies" asp-action="Details" asp-route-id ="@movie.Id">
+
+Day 2
+========================================================================================================
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+========================================================================================================
+Dependency Injection =====interface as datatype, real object depend on outer injection===> examples!!!
+------------------------------------------------------------
+public interface IEngine
+{
+    void Start();
+}
+
+public class Engine : IEngine
+{
+    public void Start()
+    {
+        // traditional engine 
+        Console.WriteLine("Starting traditional engine...");
+    }
+}
+
+public class ElectricEngine : IEngine
+{
+    public void Start()
+    {
+        // electric engine
+        Console.WriteLine("Starting electric engine...");
+    }
+}
+---------------------------------------------------------
+public class Car
+{
+    private readonly IEngine _engine;
+
+    // dependency injection
+    public Car(IEngine engine)
+    {
+        _engine = engine;
+    }
+
+    public void Drive()
+    {
+        _engine.Start();
+    }
+}
+---------------------------------------------------------
+implementation:
+// traditional engine
+IEngine traditionalEngine = new Engine();
+Car carWithTraditionalEngine = new Car(traditionalEngine);
+carWithTraditionalEngine.Drive(); // output：Starting traditional engine...
+
+// electric engine
+IEngine electricEngine = new ElectricEngine();
+Car carWithElectricEngine = new Car(electricEngine);
+carWithElectricEngine.Drive(); // output：Starting electric engine...
+-------------------------------------------------------
+
+HomeController cot = new HomeController(MovieService class instance);
+1.Constructor Injection 99%  
+2. Property Injection
+3.Method Injection
+
+.NET Core has buit-in DI support
+//Autofac: different controller ask for different interface functions implementation
+.NET Framwork needs to rely on 3rd party libararies such as Ninject, Autofac for DI
+
+steps for DI:
+1. create an abstraction, interface IMovieService
+2. Implement the interface IMovieService
+3. create readonly filed for the abstraction (interface)
+4. Inject the type in the constructor with DI from program.cs with required scope
+
+builder.Services.AddScoped<IMovieService, MovieService>();
+transient:create each time while request service
+scoped: create per request
+singleton: create when first request and use for the whole application
+
+------------------------------------------------------------------------
+ADO.NET => IDbConnection, SQLCommand
+Dapper => ORM light weight ORM => Stackoverflow
+Entity Framwork => Microsoft => Full ORM
+	Create the databse completely without writing single line of SQL
+	LINQ to access the databse and execute and get the data => C# 
+
+
+Movies => table
+id, title, revenue, budget
+
+select top 30 * from Moviews order by revenue
+
+Movies class =>
+
+movies.OrderByDescind(m=> m.Revenue).Take(30) ===> LINQ => converted to SQL code by EF
+
+EF (entity framwork) can use it in 2 ways:
+1. code first approach **** write C# code and you use something called migrations to create the tables
+2. database first approach => is not fully supported in .NET Core
+
+Code first apprach creating the database:
+1. Entities => Table
+2. Genre => Genre Table 
+3. ConnectionString => server name, database name, any credentials
+4. install the Entity Framwork Library
+5. In EF 2 most important classes DBcontent => represent your database
+and Dbset=> represents your table
+6. Create new custom DbContext class that derive from base DbContext class from EF
+7. Inject SQL server connection string into the DbContext options
+8. Now we use migrations concept in EF to create or update the database
+9. Create DbSet property inside the DbContext for the entity you need 
+10.Conventions , if you have Id as a property, it will make it as PK, primary key
+11.Create a migration file with Add-Migration command
+12.Check your migration file and make sure everything is good and then run Update-database 
+command to execute migration file
+13.If you want to mode your database and tables, then you have 2 options:
+	1.Data Annotations
+	2.Fluent API
+
+-------------------------------------------------------------------------
+builder.Property(m => m.Price).HasColumnType("decimal(5, 2)").HasDefaultValue(9.9m);
+decimal(5, 2): means a decimal number can have 5 digits as decimal number and 2 digits as fractional
+																		12.56    T
+																		123.48   T
+																		12356.4  F
+																		123.458	 F
+9.9m: means if the value is null, make it 9.9. "m" is datatype for decimal
+-------------------------------------------------------------------------
 
 
 

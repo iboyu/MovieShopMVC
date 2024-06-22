@@ -1,0 +1,116 @@
+1. What is an ORM? What are the advantages of Entity Framework over ado .net ?
+Object relational mapping. ORM is a technique used to map data from a relational 
+database (like SQL Server) to objects in your programming language (like C# classes). 
+It helps simplify database interactions by allowing you to work with objects directly 
+instead of writing complex SQL queries.
+EF using LINQ while ADO.NET using SQL.
+EF migration saving a bunch of time creating, update tables.
+
+2. Disadvantages of EF and how would you improve the performances of EF?
+Performance Overhead,Learning Curve,Limited Control
+Lazy Loading and Eager Loading, Use Compiled Queries
+
+3. What are the different approaches you can use in EF and which approach did you use & why?
+1. code first approach **** write C# code and you use something called migrations to create the tables
+2. database first approach => is not fully supported in .NET Core
+
+4. Do you have experience with any other ORMs such as Dapper?
+Dapper is a simple object mapper for .NET and own the title of King of Micro ORM in terms of speed 
+and is virtually as fast as using a raw ADO.NET data reader. An ORM is an Object Relational Mapper, 
+which is responsible for mapping between database and programming language.
+Dapper extend the IDbConnection by providing useful extension methods to query our database.
+
+5. Explain what are main differences between Dapper and Entity Framework and which one would
+you prefer in what scenarios?
+Dapper: Dapper is known for its high performance because it minimizes overhead and directly maps 
+query results to objects. It's typically faster than EF, especially in scenarios where raw SQL 
+execution speed is critical.
+
+EF: Entity Framework, while offering convenience with automatic object mapping and LINQ support, 
+introduces more abstraction layers which can impact performance, especially in complex queries or 
+large datasets.
+
+
+Choose Dapper:
+When performance is critical, especially in applications handling large volumes of data or requiring 
+fast response times.
+For developers who prefer to write and optimize SQL queries manually.
+In scenarios where you need to execute complex database-specific operations that are not easily handled 
+by higher-level abstractions.
+
+
+Choose Entity Framework:
+For rapid application development where productivity and ease of use are important factors.
+When you need automatic object-relational mapping and integration with LINQ queries.
+In projects where automated database schema management (e.g., migrations) is a priority.
+
+6. Explain the steps of code first approach with migrations.
+Code first apprach creating the database:
+1. Entities => Table
+2. Genre => Genre Table 
+3. ConnectionString => server name, database name, any credentials
+4. install the Entity Framwork Library
+5. In EF 2 most important classes DBcontent => represent your database
+and Dbset=> represents your table
+6. Create new custom DbContext class that derive from base DbContext class from EF
+7. Inject SQL server connection string into the DbContext options
+8. Now we use migrations concept in EF to create or update the database
+9. Create DbSet property inside the DbContext for the entity you need 
+10.Conventions , if you have Id as a property, it will make it as PK, primary key
+11.Create a migration file with Add-Migration command
+12.Check your migration file and make sure everything is good and then run Update-database 
+command to execute migration file
+13.If you want to mode your database and tables, then you have 2 options:
+	1.Data Annotations
+	2.Fluent API
+
+7. What are DbSet and DbContext classes in Entity Framework?
+DbSet<T> represents a collection of entities of a specific type (T) in the context of a database.
+DbContext is a primary class in EF that represents a session with the database.
+It coordinates the Entity Framework functionality for a given data model (defined by DbSet properties) and 
+provides an API for querying and saving data.
+
+8. What is Fluent API in and how is it different from Data annotations ?
+Fluent API
+Fluent API is a set of fluent method calls that allow you to configure the EF model and override default 
+conventions.
+Configuration is done in the DbContext class or using separate configuration classes.
+Data Annotations
+Data Annotations are attributes applied directly to entity classes or properties to specify validation rules, 
+database mappings, and other metadata.
+
+
+9. What difference does .AsNoTracking() make?
+You typically use .AsNoTracking() when you are querying entities for read-only purposes or when you don't 
+intend to update those entities and want to improve performance by avoiding the overhead of change tracking.
+
+10. When would you use Skip() and Take() methods in Entity Framework ?
+The Skip() method is used to skip a specified number of elements (rows) from the beginning of a sequence 
+(result set) and return the remaining elements.
+
+The Take() method is used to return a specified number of elements (rows) from a sequence (result set), 
+starting from the beginning.
+
+Combine Skip() and Take() to implement pagination =>
+	use Skip() to skip the first page of users when navigating to subsequent pages.
+	use Take() to limit the number of users displayed per page.
+
+11. What is the difference between lazy loading and eager loading? What is N + 1 problem. Which
+one did you use in your projects?
+lazy loading: Lazy loading is a technique where related entities are not retrieved from the database until 
+they are explicitly accessed for the first time.
+eager loading: Eager loading is the opposite of lazy loading. It involves explicitly loading related data 
+along with the main entity in the same query using the Include() method or by using projection (Select).
+
+The N + 1 problem occurs with lazy loading when querying multiple entities that have navigation properties, 
+and then accessing each navigation property individually in a loop.
+12. How would you see the SQL queries generated by Entity Framework? What tools or coding
+would you implement?
+When use migration, it will generate cs files which contains SQL queries
+
+13. How do you disable lazy loading in Entity Framework and what is the use of virtual keyword?
+In Entity Framework Core, you can disable lazy loading by not using the virtual keyword in your navigation 
+properties or by configuring it in the OnConfiguring method.
+The virtual keyword in C# is used to enable polymorphism and override methods or properties in derived 
+classes. In the context of Entity Framework, the virtual keyword is particularly used for enabling lazy 
+loading of navigation properties.
