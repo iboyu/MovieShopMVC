@@ -241,8 +241,16 @@ decimal(5, 2): means a decimal number can have 5 digits as decimal number and 2 
 																		123.458	 F
 9.9m: means if the value is null, make it 9.9. "m" is datatype for decimal
 -------------------------------------------------------------------------
-
-
+Day 3
+========================================================================================================
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+========================================================================================================
+14. Always check the migration file and see if it has right data model, don't update the database
+without checking 
+15. If your migration is not good and if you havn't update-database, then its safe to remove that
+migration using remove command
+16. If you have update-database and you want to change something then its better to change the model and
+add new migration and update the database
 
 
 

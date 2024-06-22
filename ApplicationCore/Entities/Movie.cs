@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Entities
 {
-//    [Table("Movie")]
+//    [Table("Movies")]
     public class Movie
     {
         public int Id { get; set; }
@@ -31,5 +31,9 @@ namespace ApplicationCore.Entities
 
         public decimal? Rating { get; set; }
 
+        //navigation property is gonna be collection of trailers
+        public ICollection<Trailer> Trailers { get; set; }
+        
+        public ICollection<MovieGenre>Genres { get; set; }
     }
 }
