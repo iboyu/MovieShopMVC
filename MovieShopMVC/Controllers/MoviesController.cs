@@ -10,13 +10,28 @@ namespace MovieShopMVC.Controllers
         {
             _movieService = movieService;
         }
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             //movie service with details
             //pass the movie details data to view
-            var movieDetails = _movieService.GetMovieDetails(id);
+            //Data
+            //remote database
+
+            //CPU bound operation => calculation PI => Loan calculation, image process
+            //I/O bound operation => database calls, file, images, videos
+
+            //Network speed, SQL Server Query performance, Server Memory
+            //T1 is just waiting
+            var movieDetails = await _movieService.GetMovieDetails(id);
 
             return View(movieDetails);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Genres(int id, int pageSize = 30, int pageNumber = 1)
+        {
+            var pageMovies = await _movieService.GetMoviesByGenrePagination(id, pageSize, pageNumber);
+            return View("PagedMovies", pageMovies);   
         }
     }
 }

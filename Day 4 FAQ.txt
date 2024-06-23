@@ -1,0 +1,8 @@
+1. What is your experience with Azure, what Azure services have you used?
+
+
+2. What is your experience with Azure DeOps CI/CD ?
+
+
+3. Can you tell me some Azure acronyms, IaaS, SaaS, PaaS and serverless?
+

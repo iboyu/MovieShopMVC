@@ -256,3 +256,73 @@ add new migration and update the database
 Partial View in MVC will help us reusability, they are nothing but views inside another view
 
 
+Day 4
+========================================================================================================
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+========================================================================================================
+async/await
+
+Sync vs Async
+
+ASP.NET => when a request come in
+Get => http://movieshop.com/movies/details/22
+
+ASP.NET will have Threadpool => collection of thread => 10 threads
+T1 T2 ... T10
+20 requests at the same time for the same URL or different URL
+t1 to t10 to process each request
+11 the request => 503 error (service unavailable)
+prevent thread starvation sceanrio
+
+I/O =>
+	async/await => go together, only await a method that returns a Task
+
+async modifier to the method
+always return a Task
+
+sync			async
+int				Task<int>
+ActionResult	Task<ActionResult>
+void			Task
+
+Server side Pagination
+you wanna get Movies by genre
+
+disadvantages of display all dataset:
+UI => not good UI EXP
+Takes lots of time => SQL server needs to get all the data
+
+Get => http://movieshop.com/movies/genre/1 => get all the moviews for genre 1
+
+Movie, MovieGenre
+
+Select  m.id, m.posterUrl, m.title
+From
+Movies m join MovieGenres mg on m.id = mg.movieid
+where mg.genreID = 1
+order by m.id 
+OFFSET 0 ROWS FETCH NEXT 30 ROWS ONLY
+//skip(60) Take(30)
+
+1473/30 =>49.1 ==> 50 pages
+start point: ((pagenumber - 1) * Pagesize)
+---page 1: 0-30
+---page 2: ((pagenumber - 1) * Pagesize) (2-1)*30 = 30 
+---page 3: ((pagenumber - 1) * Pagesize) (3-1)*30 = 60 
+
+
+Get => http://movieshop.com/movies/genre/1?pageSize=30&pageNumber=2
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+  foreach(var movie in )
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+
+
+
