@@ -253,6 +253,6 @@ migration using remove command
 add new migration and update the database
 
 
-
+Partial View in MVC will help us reusability, they are nothing but views inside another view
 
 

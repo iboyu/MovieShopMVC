@@ -10,9 +10,13 @@ namespace MovieShopMVC.Controllers
         {
             _movieService = movieService;
         }
-        public IActionResult Index()
+        public IActionResult Details(int id)
         {
-            return View();
+            //movie service with details
+            //pass the movie details data to view
+            var movieDetails = _movieService.GetMovieDetails(id);
+
+            return View(movieDetails);
         }
     }
 }

@@ -17,7 +17,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Daily question assignment", "Daily question assignment", "{B6FB0D64-DEF7-433F-9B62-9EE119D7858B}"
 	ProjectSection(SolutionItems) = preProject
 		Day 2 FAQ.txt = Day 2 FAQ.txt
-		Day1 FAQ.txt = Day1 FAQ.txt
+		Day 1 FAQ.txt = Day 1 FAQ.txt
+		Day 3 FAQ.txt = Day 3 FAQ.txt
 	EndProjectSection
 EndProject
 Global

@@ -1,0 +1,41 @@
+1. Explain what async/await does how asynchronous programming is different from Multithreaded programming.
+async Keyword: Marks a method as asynchronous, allowing the use of the await keyword within it. An async 
+method typically returns a Task or Task<T>.
+await Keyword: Pauses the execution of the method until the awaited task completes, without blocking the 
+thread. The method resumes from where it left off once the task is complete.
+
+Asynchronous Programming: Use async/await for non-blocking operations, improving responsiveness without 
+additional threads.
+Multithreaded Programming: Use multiple threads for parallel execution of CPU-bound tasks, leveraging 
+multiple cores for performance.
+2. Explain the scenarios where would you use Task.WhenAny() and Task.WhenAll() ?
+Task.WhenAny()
+Scenario: You need to start multiple asynchronous tasks and want to proceed as soon as any one of them 
+completes.
+Use Case: This is useful when you're interested in the result of the fastest task and can ignore the 
+others, or you might want to cancel the remaining tasks once one of them finishes.
+Task.WhenAll()
+Scenario: You need to start multiple asynchronous tasks and want to wait for all of them to complete 
+before proceeding.
+Use Case: This is useful when you need results from all tasks or you need to ensure that all tasks 
+have completed before continuing.
+
+
+3. What are various async return types in C#
+Task: For async methods that do not return a value.
+Task<TResult>: For async methods that return a value.
+ValueTask: For performance-sensitive scenarios where a task may complete synchronously.
+ValueTask<TResult>: For performance-sensitive scenarios where a task returns a value and may complete 
+synchronously.
+void: For async event handlers, used with caution.
+
+
+4. How would you do Server-side Pagination using Entity Framework?
+1. Define Pagination Parameters: These typically include the page number and page size.
+
+2. Query the Database: Use LINQ to query the database and apply Skip and Take methods to retrieve only 
+the data for the current page.
+
+3. Return Paginated Data: Package the paginated data along with total record count and other pagination 
+metadata.
+
