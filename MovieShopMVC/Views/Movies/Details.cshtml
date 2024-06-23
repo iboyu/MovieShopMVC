@@ -1,10 +1,85 @@
-﻿@model  ApplicationCore.Models.MovieDetailsModel
+﻿@* @model  ApplicationCore.Models.MovieDetailsModel
 <h2>Movie Details</h2>
 <h3>@Model.Title</h3>
 <h6>
     @Model.Overview
-</h6>
+</h6> *@
+@model ApplicationCore.Models.MovieDetailsModel
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .background-row {
+            background-image: url('@Model.BackdropUrl');
+            background-size: cover;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <div class="row background-row py-4">
+            <div class="col-md-3">
+                <img src="@Model.PosterUrl" alt="@Model.Title" class="img-fluid" />
+            </div>
+            <div class="col-md-6">
+                <h1>@Model.Title</h1>
+                <p><strong>IMDB Rating:</strong> @Model.ImdbUrl</p>
+                <p>
+                    <strong>Genres:</strong>
+                    @foreach (var genre in Model.Genres)
+                    {
+                        @genre.Name @if (genre != Model.Genres.Last())
+                        {
+                            <span>,</span>
+                        }
+                    }
+                </p>
+                <p><strong>Overview:</strong> @Model.Overview</p>
+            </div>
+            <div class="col-md-3 text-right">
+                <button class="btn btn-primary mb-2">Review</button>
+                <button class="btn btn-success">Buy $9.90</button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <p><strong>Release Date:</strong> @Model.ReleaseDate</p>
+                <p><strong>Run Time:</strong> @Model.RunTime minutes</p>
+                <p><strong>Box Office:</strong> @Model.Revenue</p>
+                <p><strong>Budget:</strong> @Model.Budget</p>
+                <h4>Trailers</h4>
+                <ul class="list-unstyled">
+                    @foreach (var trailer in Model.Trailers)
+                    {
+                        <li><a href="@trailer.TrailerUrl" target="_blank">@trailer.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <h4>Cast</h4>
+                <ul class="list-unstyled">
+                    @foreach (var cast in Model.Casts)
+                    {
+                        <li class="media mb-3">
+                            <img src="@cast.ProfilePath" class="mr-3" alt="@cast.Name" style="width: 64px; height: 64px;border-radius: 50%" />
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">@cast.Name</h5>
+                                <p>as @cast.Character</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
 
 
